@@ -11,7 +11,15 @@ pipeline {
         PORT = 8082;
     }
 
-    agent {
-      node {label 'python'}
+    agent any
+
+    stages {
+        stage("One"){
+        // Do Something
+        }
+        stage("Two"){
+        // Do Something
+        }
     }
+
 }
