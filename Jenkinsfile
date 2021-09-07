@@ -13,13 +13,9 @@ pipeline {
 
     agent any
 
-    stages {
-        steps("One"){
-            echo "One"
-        }
-        steps("Two"){
-            echo "Two"
+    stage('Get Latest Code') {
+        steps {
+            git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
         }
     }
-
 }
