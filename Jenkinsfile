@@ -14,10 +14,10 @@ pipeline {
     agent any
 
     stages {
-        stage("One"){
+        steps("One"){
             echo "One"
         }
-        stage("Two"){
+        steps("Two"){
             echo "Two"
         }
     }
