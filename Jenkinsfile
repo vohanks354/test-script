@@ -12,10 +12,11 @@ pipeline {
     }
 
     agent any
-
-    stage('Get Latest Code') {
-        steps {
-            git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
+    stages{
+        stage('Get Latest Code') {
+            steps {
+                git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
+            }
         }
     }
 }
