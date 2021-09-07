@@ -18,14 +18,12 @@ pipeline {
                 git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
             }
         }
-    }
-
-    stage("Install Dependencies") {
-        steps {
-            sh """
-                ls
-            """
+        stage("Install Dependencies") {
+            steps {
+                sh """
+                    ls
+                """
+            }
         }
     }
-
 }
