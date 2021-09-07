@@ -1,0 +1,47 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: template-test
+objects:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    name: mysqlku
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: vohanks354/mgs-mysql
+      referencePolicy:
+        type: Source
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: bcmysql
+    labels:
+      app: bcmysql
+  spec:
+    source:
+      type: Git
+      git:
+        uri: https://github.com/vohanks354/jenkins
+      # contextDir: httpd-hello-world
+    strategy:
+      type: Docker                      
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+        from:
+          kind: ImageStreamTag
+          name: mysqlku:latest
+    output:
+      to:
+        kind: ImageStreamTag
+        name: bcmysql:latest
+    triggers:
+    - type: ImageChange
+
+
+

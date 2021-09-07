@@ -1,0 +1,45 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: template-coba
+objects:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    name: httpd
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: bitnami/apache
+      referencePolicy:
+        type: Source
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: mywebsite
+    labels:
+      app: mywebsite
+  spec:
+    source:
+      type: Git
+      git:
+        uri: https://github.com/monodot/container-up
+      contextDir: httpd-hello-world
+    strategy:
+      type: Docker                      
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+        from:
+          kind: ImageStreamTag       # Use an imagestream tag as 'FROM'
+          namespace: toms-project    # Which project?
+          name: httpd:latest         # Use the imagestream created above
+    output:
+      to:
+        kind: ImageStreamTag
+        name: mywebsite:latest
+    triggers:
+    - type: ImageChange              # Trigger a build on image change
