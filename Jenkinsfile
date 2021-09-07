@@ -15,10 +15,10 @@ pipeline {
 
     stages {
         stage("One"){
-        // Do Something
+            echo "One"
         }
         stage("Two"){
-        // Do Something
+            echo "Two"
         }
     }
 
